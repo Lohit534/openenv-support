@@ -1,0 +1,26 @@
+version: "1.0"
+environment:
+  name: "SupportTicketResolution"
+  description: "A simulated real-world customer support ticket resolution system."
+  version: "0.1.0"
+spaces:
+  observation:
+    type: "dict"
+    schema:
+      ticket_id: "string"
+      user_inquiry: "string"
+      history: "list[string]"
+      is_terminated: "boolean"
+      available_actions: "list[string]"
+  action:
+    type: "dict"
+    schema:
+      action_type: "string(classify|reply|escalate|refund|ask_info)"
+      args: "dict"
+tasks:
+  - task_id: "task_easy_1"
+    difficulty: "easy"
+  - task_id: "task_medium_1"
+    difficulty: "medium"
+  - task_id: "task_hard_1"
+    difficulty: "hard"
