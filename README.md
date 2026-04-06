@@ -1,4 +1,15 @@
+---
+title: OpenEnv Support
+emoji: 🎫
+colorFrom: blue
+colorTo: green
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # OpenEnv Support Ticket Resolution
+
 
 A real-world OpenEnv environment simulating a Customer Support Ticket Resolution System. Built with Pydantic for the Meta + HuggingFace agent evaluation requirements.
 
