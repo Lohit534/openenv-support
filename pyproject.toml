@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "openenv-support"
+version = "0.1.0"
+description = "Customer Support Ticket Resolution OpenEnv Environment"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = [
+    "pydantic",
+    "openai",
+    "fastapi",
+    "uvicorn",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["env*"]
+
+[tool.openenv]
+environment_class = "env.environment:SupportEnvironment"
+app = "env.environment:app"
+version = "0.1.0"
