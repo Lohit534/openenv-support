@@ -68,15 +68,35 @@ class SupportEnvironment:
 app = FastAPI(title="Support Ticket Environment", description="OpenEnv HTTP Wrapper")
 global_env = SupportEnvironment()
 
+# Auto-initialize so /state and /step work right away
+global_env.reset()
+
+@app.get("/")
+def root():
+    return {
+        "name": "SupportTicketResolution",
+        "version": "0.1.0",
+        "description": "OpenEnv Customer Support Ticket Resolution Environment",
+        "endpoints": ["/reset", "/step", "/state"],
+        "status": "running"
+    }
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
 @app.post("/reset", response_model=Observation)
 def reset_env(task_idx: int = None):
+    return global_env.reset(task_idx)
+
+@app.get("/reset", response_model=Observation)
+def reset_env_get(task_idx: int = None):
     return global_env.reset(task_idx)
 
 @app.post("/step")
 def step_env(action: Action):
     if global_env.state_data is None:
-        raise HTTPException(status_code=400, detail="Call /reset first.")
-    
+        global_env.reset()
     obs, reward, done, info = global_env.step(action)
     return {
         "observation": obs.model_dump(),
@@ -88,5 +108,5 @@ def step_env(action: Action):
 @app.get("/state", response_model=EnvState)
 def get_state():
     if global_env.state_data is None:
-        raise HTTPException(status_code=400, detail="Environment not initialized.")
+        global_env.reset()
     return global_env.state()
